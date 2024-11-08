@@ -1,4 +1,6 @@
 # Makefile
 
 install:
-    bundle install
+	bundle install
+lint:
+	bundle exec rubocop
