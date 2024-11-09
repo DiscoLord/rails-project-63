@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Создаем простые тэги тут
 module TagFactory
   def p(content)
     "<p>#{content}</p>"
