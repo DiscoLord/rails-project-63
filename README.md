@@ -1,3 +1,6 @@
+![Build](https://github.com/DiscoLord/rails-project-63/actions/workflows/main.yml/badge.svg)
+![Hexlet check](https://github.com/DiscoLord/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)
+
 # HexletCode
 
 TODO: Delete this and the text below, and describe your gem
