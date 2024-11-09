@@ -25,7 +25,17 @@ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+user = User.new name: 'rob', job: 'kek'
+HexletCode.form_for(user, url: '/profile', class: 'hexlet-form')
+```
+
+will net you
+
+<form action='/profile' method='post' class='hexlet-form'>
+    <input type='text' name='name' value='rob' class='user-input'>
+    <textarea name='job' rows='50' cols='50'>kek</textarea>
+</form>
 
 ## Development
 

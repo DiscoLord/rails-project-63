@@ -14,8 +14,12 @@ module TagFactory
     "<img src='#{src}' alt='#{alt_text}'>"
   end
 
-  def input(type, name, value = nil)
-    "<input type='#{type}' name='#{name}' value='#{value}'>"
+  def input(type, name, value = nil, params = {})
+    "<input type='#{type}' name='#{name}' value='#{value}'#{format_attributes(params)}>"
+  end
+
+  def textarea(name, rows, cols, value = nil, params = {})
+    "<textarea name='#{name}' rows='#{rows}' cols='#{cols}'#{format_attributes(params)}>#{value}</textarea>"
   end
 
   def label(for_id, text)
@@ -24,5 +28,9 @@ module TagFactory
 
   def button(text)
     "<button>#{text}</button>"
+  end
+
+  def format_attributes(params)
+    params.map { |key, value| " #{key}='#{value}'" }.join
   end
 end
