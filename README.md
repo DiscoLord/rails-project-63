@@ -31,11 +31,12 @@ HexletCode.form_for(user, url: '/profile', class: 'hexlet-form')
 ```
 
 will net you
-
+```html
 <form action='/profile' method='post' class='hexlet-form'>
     <input type='text' name='name' value='rob' class='user-input'>
     <textarea name='job' rows='50' cols='50'>kek</textarea>
 </form>
+```
 
 ## Development
 
