@@ -2,14 +2,13 @@
 
 # Создаем простые тэги тут
 class TagFactory
-
   attr_reader :form_string
 
   def initialize(field_object)
     @field_object = field_object
     @form_string = ''
   end
-  
+
   def p(content)
     @form_string += "<p>#{content}</p>"
   end
@@ -23,12 +22,12 @@ class TagFactory
   end
 
   def generic_input(name, **args)
-    as = args[:as]
-    if as == :text
+    case args[:as]
+    when :text
       input :text, name, args[:value], **args.except(:as, :value)
-    elsif as == :textarea
+    when :textarea
       textarea(name, args[:rows] || 4, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
-    elsif as == :submit
+    when :submit
       submit(args[:value])
     else
       @form_string
@@ -44,7 +43,8 @@ class TagFactory
   def textarea(name, rows, cols, value = nil, params = {})
     @field_object.public_send name
     label(name, name.capitalize)
-    @form_string += "<textarea name='#{name}' rows='#{rows}' cols='#{cols}'#{format_attributes(params)}>#{value}</textarea>"
+    @form_string += "<textarea name='#{name}' rows='#{rows}' cols='#{cols}'"\
+      "#{format_attributes(params)}>#{value}</textarea>"
   end
 
   def submit(text)
@@ -60,7 +60,7 @@ class TagFactory
   end
 
   private
-  
+
   def format_attributes(params)
     params.map { |key, value| " #{key}='#{value}'" }.join
   end

@@ -7,7 +7,6 @@ autoload :TagFactory, 'hexlet_code/factory/tag_factory'
 
 # Main module
 module HexletCode
-
   class Error < StandardError; end
 
   def self.form_for(user, url = '#', args = {})
@@ -17,7 +16,7 @@ module HexletCode
     factory = TagFactory.new(user)
 
     form += yield(factory) if block_given?
-    
+
     form += '</form>'
     form
   end

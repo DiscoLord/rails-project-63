@@ -4,7 +4,6 @@ require 'test_helper'
 require_relative '../../lib/hexlet_code/factory/tag_factory'
 
 class HtmlTagMethodsTest < Minitest::Test
-
   def setup
     user = User.new(name: 'rob', job: 'kek', gender: 'male')
     @factory = TagFactory.new(user)
@@ -19,7 +18,8 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_image_tag
-    assert_equal "<img src='/images/example.jpg' alt='Example Image'>", @factory.img('/images/example.jpg', 'Example Image')
+    assert_equal "<img src='/images/example.jpg' alt='Example Image'>",
+                 @factory.img('/images/example.jpg', 'Example Image')
   end
 
   def test_input_tag
@@ -27,27 +27,32 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_input_with_nil_value
-    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>", @factory.input('text', :name, nil)
+    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>",
+                 @factory.input('text', :name, nil)
   end
-  
+
   def test_textarea_with_nil_value
-    assert_equal "<label for='name'>Name</label><textarea name='name' rows='4' cols='40'></textarea>", @factory.textarea(:name, 4, 40, nil)
-  end  
+    assert_equal "<label for='name'>Name</label><textarea name='name' rows='4' cols='40'></textarea>",
+                 @factory.textarea(:name, 4, 40, nil)
+  end
 
   def test_input_with_additional_attributes
-    assert_equal "<label for='name'>Name</label><input type='text' name='name' value='rob' class='user-input' required='true'>",
-    @factory.input('text', :name, 'rob', class: 'user-input', required: 'true')
-  end  
+    assert_equal "<label for='name'>Name</label>"\
+      "<input type='text' name='name' value='rob' class='user-input' required='true'>",
+                 @factory.input('text', :name, 'rob', class: 'user-input', required: 'true')
+  end
 
   def test_textarea_tag
-    assert_equal "<label for='job'>Job</label><textarea name='job' rows='50' cols='50'>jobbest job</textarea>", @factory.textarea(:job, 50, 50, 'jobbest job')
+    assert_equal "<label for='job'>Job</label><textarea name='job' rows='50' cols='50'>jobbest job</textarea>",
+                 @factory.textarea(:job, 50, 50, 'jobbest job')
   end
-  
+
   def test_textarea_with_additional_attributes
-    assert_equal "<label for='job'>Job</label><textarea name='job' rows='10' cols='30' placeholder='Enter job description'>Best Job</textarea>",
-    @factory.textarea(:job, 10, 30, 'Best Job', placeholder: 'Enter job description')
+    assert_equal "<label for='job'>Job</label>"\
+      "<textarea name='job' rows='10' cols='30' placeholder='Enter job description'>Best Job</textarea>",
+                 @factory.textarea(:job, 10, 30, 'Best Job', placeholder: 'Enter job description')
   end
-  
+
   def test_label_tag
     assert_equal "<label for='username'>Username:</label>", @factory.label('username', 'Username:')
   end
@@ -76,7 +81,8 @@ class HtmlTagMethodsTest < Minitest::Test
 
   def test_generic_input_as_textarea
     @factory.generic_input(:job, as: :textarea, rows: 5, cols: 30, value: 'developer', class: 'textarea-input')
-    expected_html = "<label for='job'>Job</label><textarea name='job' rows='5' cols='30' class='textarea-input'>developer</textarea>"
+    expected_html = "<label for='job'>Job</label>"\
+      "<textarea name='job' rows='5' cols='30' class='textarea-input'>developer</textarea>"
     assert_equal expected_html, @factory.form_string
   end
 
