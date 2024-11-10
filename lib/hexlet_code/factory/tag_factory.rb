@@ -2,8 +2,6 @@
 
 # Создаем простые тэги тут
 class TagFactory
-  attr_reader :form_string
-
   def initialize(field_object)
     @field_object = field_object
     @form_string = ''
@@ -23,15 +21,14 @@ class TagFactory
 
   def input(name, **args)
     case args[:as]
-    when :text
-      input_tag :text, name, args[:value], **args.except(:as, :value)
     when :textarea
       textarea(name, args[:rows] || 4, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
     when :submit
       submit(args[:value] || 'Save')
     else
-      @form_string
+      input_tag (args[:as] || :text), name, args[:value], **args.except(:as, :value)
     end
+    @form_string
   end
 
   def input_tag(type, name, value = nil, **params)

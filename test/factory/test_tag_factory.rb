@@ -75,33 +75,29 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_generic_input_as_text
-    @factory.input(:name, as: :text, value: 'rob', class: 'user-input')
     expected_html = "<label for='name'>Name</label><input type='text' name='name' value='rob' class='user-input'>"
-    assert_equal expected_html, @factory.form_string
+    assert_equal expected_html, @factory.input(:name, as: :text, value: 'rob', class: 'user-input')
   end
 
   def test_generic_input_as_textarea
-    @factory.input(:job, as: :textarea, rows: 5, cols: 30, value: 'developer', class: 'textarea-input')
     expected_html = "<label for='job'>Job</label>"\
       "<textarea name='job' rows='5' cols='30' class='textarea-input'>developer</textarea>"
-    assert_equal expected_html, @factory.form_string
+    assert_equal expected_html,
+                 @factory.input(:job, as: :textarea, rows: 5, cols: 30, value: 'developer', class: 'textarea-input')
   end
 
   def test_generic_input_as_submit
-    @factory.input(:submit_button, as: :submit, value: 'Wow')
     expected_html = "<input type='submit' value='Wow'>"
-    assert_equal expected_html, @factory.form_string
+    assert_equal expected_html, @factory.input(:submit_button, as: :submit, value: 'Wow')
   end
 
   def test_generic_input_as_submit_without_name
-    @factory.input(:submit_button, as: :submit)
     expected_html = "<input type='submit' value='Save'>"
-    assert_equal expected_html, @factory.form_string
+    assert_equal expected_html, @factory.input(:submit_button, as: :submit)
   end
 
   def test_generic_input_with_no_as
-    initial_form_string = @factory.form_string.dup
-    @factory.input(:name)
-    assert_equal initial_form_string, @factory.form_string
+    expected_html = "<input type='submit' value='Save'>"
+    assert_equal expected_html, @factory.input(:submit_button, as: :submit)
   end
 end

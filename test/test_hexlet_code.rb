@@ -50,4 +50,14 @@ class TestHexletCode < Minitest::Test
     end
     assert_equal load_html_fixture('expected_form4.html'), form
   end
+
+  def test_for_generic_input
+    user = User.new name: 'rob', job: 'kek'
+    form = HexletCode.form_for user, '/profile', class: 'custom-form', data: { id: 123 } do |f|
+      f.input :name
+      f.input :job
+      f.submit
+    end
+    assert_equal load_html_fixture('expected_form1.html'), form
+  end
 end
