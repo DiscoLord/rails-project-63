@@ -4,38 +4,50 @@ require 'test_helper'
 require_relative '../lib/hexlet_code/models/user'
 
 class TestHexletCode < Minitest::Test
+  def load_html_fixture(filename)
+    File.read(File.join(__dir__, 'fixtures', filename)).strip
+  end
+
   def test_that_it_has_a_version_number
     refute_nil ::HexletCode::VERSION
   end
 
-  def test_form_for
-    user = User.new name: 'rob'
-    assert_equal "<form action='/profile' method='post' class='hexlet-form'>"\
-    "<input type='text' name='name' value='rob' class='user-input'>"\
-    "<textarea name='job' rows='50' cols='50'></textarea></form>",
-                 HexletCode.form_for(user, url: '/profile', class: 'hexlet-form')
-  end
-
-  def test_form_for2
-    user = User.new name: 'rob'
-    assert_equal "<form action='#' method='post' class='hexlet-form'>"\
-    "<input type='text' name='name' value='rob' class='user-input'>"\
-    "<textarea name='job' rows='50' cols='50'></textarea></form>",
-                 HexletCode.form_for(user, class: 'hexlet-form')
-  end
-
-  def test_form_for3
-    user = User.new name: 'rob'
-    assert_equal "<form action='#' method='post'><input type='text' name='name' value='rob' class='user-input'>"\
-    "<textarea name='job' rows='50' cols='50'></textarea></form>",
-                 HexletCode.form_for(user)
-  end
-
-  def test_form_for4
+  def test_form_with_text_input_and_textarea
     user = User.new name: 'rob', job: 'kek'
-    assert_equal "<form action='/profile' method='post' class='hexlet-form'>"\
-    "<input type='text' name='name' value='rob' class='user-input'>"\
-    "<textarea name='job' rows='50' cols='50'>kek</textarea></form>",
-                 HexletCode.form_for(user, url: '/profile', class: 'hexlet-form')
+    form = HexletCode.form_for user, '/profile', class: 'hexlet-form' do |f|
+      f.input :text, :name, user.name, class: 'user-input'
+      f.textarea :job, 50, 50, user.job
+      f.submit 'Wow'
+    end
+    assert_equal load_html_fixture('expected_form5.html'), form
+  end
+
+  def test_form_with_missing_optional_field
+    user = User.new name: 'rob' # Job is missing
+    form = HexletCode.form_for user, '/profile', class: 'hexlet-form' do |f|
+      f.input :text, :name, user.name, class: 'user-input'
+      f.input :text, :job, user.job || '', class: 'job-input' # Handles missing job field gracefully
+      f.submit 'Save'
+    end
+    assert_equal load_html_fixture('expected_form2.html'), form
+  end
+
+  def test_form_without_submit_button
+    user = User.new name: 'rob', job: 'kek'
+    form = HexletCode.form_for user, '/profile' do |f|
+      f.input :text, :name, user.name
+      f.textarea :job, 5, 30, user.job
+    end
+    assert_equal load_html_fixture('expected_form3.html'), form
+  end
+
+  def test_form_with_custom_attributes
+    user = User.new name: 'rob', job: 'kek'
+    form = HexletCode.form_for user, '/profile', class: 'custom-form', data: { id: 123 } do |f|
+      f.input :text, :name, user.name, class: 'user-input', placeholder: 'Enter your name'
+      f.textarea :job, 10, 40, user.job, class: 'textarea-input', placeholder: 'Describe your job'
+      f.submit 'Submit'
+    end
+    assert_equal load_html_fixture('expected_form4.html'), form
   end
 end

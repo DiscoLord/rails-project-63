@@ -7,17 +7,17 @@ autoload :TagFactory, 'hexlet_code/factory/tag_factory'
 
 # Main module
 module HexletCode
-  extend TagFactory
 
   class Error < StandardError; end
 
-  def self.form_for(user, args = {})
-    param_class = param_or_empty args[:class], 'class'
-    form = "<form action='#{args[:url] || '#'}' method='post'#{param_class}>"
+  def self.form_for(user, url = '#', args = {})
+    param_class = param_or_empty(args[:class], 'class')
+    form = "<form action='#{url}' method='post'#{param_class}>"
 
-    form += input :text, :name, user.name, class: 'user-input'
-    form += textarea :job, 50, 50, user.job
+    factory = TagFactory.new(user)
 
+    form += yield(factory) if block_given?
+    
     form += '</form>'
     form
   end
