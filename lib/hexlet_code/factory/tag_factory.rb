@@ -40,8 +40,8 @@ class TagFactory
   def textarea(name, rows, cols, value = nil, params = {})
     value = @field_object.public_send name if value.nil?
     label(name, name.capitalize)
-    @form_string += "<textarea name='#{name}' rows='#{rows}' cols='#{cols}'"\
-      "#{format_attributes(params)}>#{value}</textarea>"
+    @form_string += "<textarea name='#{name}' rows='#{rows}' cols='#{cols}'" \
+                    "#{format_attributes(params)}>#{value}</textarea>"
   end
 
   def submit(text = 'Save')
