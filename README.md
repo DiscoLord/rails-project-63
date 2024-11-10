@@ -27,14 +27,21 @@ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
 
 ```ruby
 user = User.new name: 'rob', job: 'kek'
-HexletCode.form_for(user, url: '/profile', class: 'hexlet-form')
+    form = HexletCode.form_for user, '/profile', class: 'hexlet-form' do |f|
+      f.input :text, :name, user.name, class: 'user-input'
+      f.textarea :job, 50, 50, user.job
+      f.submit 'Wow'
+    end
 ```
 
 will net you
 ```html
 <form action='/profile' method='post' class='hexlet-form'>
+    <label for='name'>Name</label>
     <input type='text' name='name' value='rob' class='user-input'>
+    <label for='job'>Job</label>
     <textarea name='job' rows='50' cols='50'>kek</textarea>
+    <input type='submit' value='Wow'>
 </form>
 ```
 
