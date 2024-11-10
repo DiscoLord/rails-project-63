@@ -28,7 +28,7 @@ class TagFactory
     when :textarea
       textarea(name, args[:rows] || 4, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
     when :submit
-      submit(args[:value])
+      submit(args[:value] || 'Save')
     else
       @form_string
     end
@@ -47,7 +47,7 @@ class TagFactory
       "#{format_attributes(params)}>#{value}</textarea>"
   end
 
-  def submit(text)
+  def submit(text = 'Save')
     @form_string += "<input type='submit' value='#{text}'>"
   end
 

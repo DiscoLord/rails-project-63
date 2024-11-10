@@ -88,7 +88,13 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_generic_input_as_submit
-    @factory.input(:submit_button, as: :submit, value: 'Save')
+    @factory.input(:submit_button, as: :submit, value: 'Wow')
+    expected_html = "<input type='submit' value='Wow'>"
+    assert_equal expected_html, @factory.form_string
+  end
+
+  def test_generic_input_as_submit_without_name
+    @factory.input(:submit_button, as: :submit)
     expected_html = "<input type='submit' value='Save'>"
     assert_equal expected_html, @factory.form_string
   end
