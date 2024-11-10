@@ -9,9 +9,9 @@ autoload :TagFactory, 'hexlet_code/factory/tag_factory'
 module HexletCode
   class Error < StandardError; end
 
-  def self.form_for(user, url = '#', args = {})
+  def self.form_for(user, args = {})
     param_class = param_or_empty(args[:class], 'class')
-    form = "<form action='#{url}' method='post'#{param_class}>"
+    form = "<form action='#{args[:url] || '#'}' method='#{args[:method] || 'post'}'#{param_class}>"
 
     factory = TagFactory.new(user)
 
