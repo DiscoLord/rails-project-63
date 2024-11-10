@@ -23,17 +23,17 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_input_tag
-    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>",
+    assert_equal "<label for='name'>Name</label><input type='text' name='name' value='rob'>",
                  @factory.input_tag('text', :name)
   end
 
   def test_input_with_nil_value
-    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>",
+    assert_equal "<label for='name'>Name</label><input type='text' name='name' value='rob'>",
                  @factory.input_tag('text', :name, nil)
   end
 
   def test_textarea_with_nil_value
-    assert_equal "<label for='name'>Name</label><textarea name='name' rows='4' cols='40'></textarea>",
+    assert_equal "<label for='name'>Name</label><textarea name='name' rows='4' cols='40'>rob</textarea>",
                  @factory.textarea(:name, 4, 40, nil)
   end
 
@@ -64,18 +64,19 @@ class HtmlTagMethodsTest < Minitest::Test
 
   def test_raises_no_method_error_for_invalid_field
     assert_raises(NoMethodError) do
-      @factory.input_tag(:text, :non_existent_field, 'value')
+      @factory.input_tag(:text, :non_existent_field)
     end
   end
 
   def test_raises_no_method_error_for_invalid_field_in_textarea
     assert_raises(NoMethodError) do
-      @factory.textarea(:non_existent_field, 4, 40, 'value')
+      @factory.textarea(:non_existent_field, 4, 40)
     end
   end
 
   def test_generic_input_as_text
-    expected_html = "<label for='name'>Name</label><input type='text' name='name' value='rob' class='user-input'>"
+    expected_html = "<label for='name'>Name</label>"\
+      "<textarea name='name' rows='20' cols='40' class='user-input'>rob</textarea>"
     assert_equal expected_html, @factory.input(:name, as: :text, value: 'rob', class: 'user-input')
   end
 

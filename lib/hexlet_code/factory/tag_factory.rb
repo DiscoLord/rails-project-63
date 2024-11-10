@@ -21,8 +21,8 @@ class TagFactory
 
   def input(name, **args)
     case args[:as]
-    when :textarea
-      textarea(name, args[:rows] || 4, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
+    when :textarea, :text
+      textarea(name, args[:rows] || 20, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
     when :submit
       submit(args[:value] || 'Save')
     else
@@ -32,13 +32,13 @@ class TagFactory
   end
 
   def input_tag(type, name, value = nil, **params)
-    @field_object.public_send name
+    value = @field_object.public_send name if value.nil?
     label(name, name.capitalize)
     @form_string += "<input type='#{type}' name='#{name}' value='#{value}'#{format_attributes(params)}>"
   end
 
   def textarea(name, rows, cols, value = nil, params = {})
-    @field_object.public_send name
+    value = @field_object.public_send name if value.nil?
     label(name, name.capitalize)
     @form_string += "<textarea name='#{name}' rows='#{rows}' cols='#{cols}'"\
       "#{format_attributes(params)}>#{value}</textarea>"
