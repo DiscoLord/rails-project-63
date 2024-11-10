@@ -23,7 +23,8 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_input_tag
-    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>", @factory.input_tag('text', :name)
+    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>",
+                 @factory.input_tag('text', :name)
   end
 
   def test_input_with_nil_value
