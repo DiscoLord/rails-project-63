@@ -21,10 +21,10 @@ class TagFactory
     @form_string += "<img src='#{src}' alt='#{alt_text}'>"
   end
 
-  def generic_input(name, **args)
+  def input(name, **args)
     case args[:as]
     when :text
-      input :text, name, args[:value], **args.except(:as, :value)
+      input_tag :text, name, args[:value], **args.except(:as, :value)
     when :textarea
       textarea(name, args[:rows] || 4, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
     when :submit
@@ -34,7 +34,7 @@ class TagFactory
     end
   end
 
-  def input(type, name, value = nil, **params)
+  def input_tag(type, name, value = nil, **params)
     @field_object.public_send name
     label(name, name.capitalize)
     @form_string += "<input type='#{type}' name='#{name}' value='#{value}'#{format_attributes(params)}>"

@@ -15,7 +15,7 @@ class TestHexletCode < Minitest::Test
   def test_form_with_text_input_and_textarea
     user = User.new name: 'rob', job: 'kek'
     form = HexletCode.form_for user, '/profile', class: 'hexlet-form' do |f|
-      f.input :text, :name, user.name, class: 'user-input'
+      f.input_tag :text, :name, user.name, class: 'user-input'
       f.textarea :job, 50, 50, user.job
       f.submit 'Wow'
     end
@@ -25,8 +25,8 @@ class TestHexletCode < Minitest::Test
   def test_form_with_missing_optional_field
     user = User.new name: 'rob' # Job is missing
     form = HexletCode.form_for user, '/profile', class: 'hexlet-form' do |f|
-      f.input :text, :name, user.name, class: 'user-input'
-      f.input :text, :job, user.job || '', class: 'job-input' # Handles missing job field gracefully
+      f.input_tag :text, :name, user.name, class: 'user-input'
+      f.input_tag :text, :job, user.job || '', class: 'job-input' # Handles missing job field gracefully
       f.submit 'Save'
     end
     assert_equal load_html_fixture('expected_form2.html'), form
@@ -35,7 +35,7 @@ class TestHexletCode < Minitest::Test
   def test_form_without_submit_button
     user = User.new name: 'rob', job: 'kek'
     form = HexletCode.form_for user, '/profile' do |f|
-      f.input :text, :name, user.name
+      f.input_tag :text, :name, user.name
       f.textarea :job, 5, 30, user.job
     end
     assert_equal load_html_fixture('expected_form3.html'), form
@@ -44,7 +44,7 @@ class TestHexletCode < Minitest::Test
   def test_form_with_custom_attributes
     user = User.new name: 'rob', job: 'kek'
     form = HexletCode.form_for user, '/profile', class: 'custom-form', data: { id: 123 } do |f|
-      f.input :text, :name, user.name, class: 'user-input', placeholder: 'Enter your name'
+      f.input_tag :text, :name, user.name, class: 'user-input', placeholder: 'Enter your name'
       f.textarea :job, 10, 40, user.job, class: 'textarea-input', placeholder: 'Describe your job'
       f.submit 'Submit'
     end

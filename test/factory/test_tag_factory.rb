@@ -23,12 +23,12 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_input_tag
-    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>", @factory.input('text', :name)
+    assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>", @factory.input_tag('text', :name)
   end
 
   def test_input_with_nil_value
     assert_equal "<label for='name'>Name</label><input type='text' name='name' value=''>",
-                 @factory.input('text', :name, nil)
+                 @factory.input_tag('text', :name, nil)
   end
 
   def test_textarea_with_nil_value
@@ -39,7 +39,7 @@ class HtmlTagMethodsTest < Minitest::Test
   def test_input_with_additional_attributes
     assert_equal "<label for='name'>Name</label>"\
       "<input type='text' name='name' value='rob' class='user-input' required='true'>",
-                 @factory.input('text', :name, 'rob', class: 'user-input', required: 'true')
+                 @factory.input_tag('text', :name, 'rob', class: 'user-input', required: 'true')
   end
 
   def test_textarea_tag
@@ -63,7 +63,7 @@ class HtmlTagMethodsTest < Minitest::Test
 
   def test_raises_no_method_error_for_invalid_field
     assert_raises(NoMethodError) do
-      @factory.input(:text, :non_existent_field, 'value')
+      @factory.input_tag(:text, :non_existent_field, 'value')
     end
   end
 
@@ -74,27 +74,27 @@ class HtmlTagMethodsTest < Minitest::Test
   end
 
   def test_generic_input_as_text
-    @factory.generic_input(:name, as: :text, value: 'rob', class: 'user-input')
+    @factory.input(:name, as: :text, value: 'rob', class: 'user-input')
     expected_html = "<label for='name'>Name</label><input type='text' name='name' value='rob' class='user-input'>"
     assert_equal expected_html, @factory.form_string
   end
 
   def test_generic_input_as_textarea
-    @factory.generic_input(:job, as: :textarea, rows: 5, cols: 30, value: 'developer', class: 'textarea-input')
+    @factory.input(:job, as: :textarea, rows: 5, cols: 30, value: 'developer', class: 'textarea-input')
     expected_html = "<label for='job'>Job</label>"\
       "<textarea name='job' rows='5' cols='30' class='textarea-input'>developer</textarea>"
     assert_equal expected_html, @factory.form_string
   end
 
   def test_generic_input_as_submit
-    @factory.generic_input(:submit_button, as: :submit, value: 'Save')
+    @factory.input(:submit_button, as: :submit, value: 'Save')
     expected_html = "<input type='submit' value='Save'>"
     assert_equal expected_html, @factory.form_string
   end
 
   def test_generic_input_with_no_as
     initial_form_string = @factory.form_string.dup
-    @factory.generic_input(:name)
+    @factory.input(:name)
     assert_equal initial_form_string, @factory.form_string
   end
 end
