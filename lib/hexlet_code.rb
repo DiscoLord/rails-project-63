@@ -14,6 +14,6 @@ module HexletCode
     builder = FormBuilder.new(entity, attributes)
     yield(builder) if block_given?
 
-    FormRenderer.render_html(builder.form_body, attributes)
+    FormRenderer.render_html(builder.form_body)
   end
 end
