@@ -2,6 +2,8 @@
 
 require 'test_helper'
 require_relative '../lib/hexlet_code/form_builder'
+require_relative '../lib/hexlet_code/form_renderer'
+require_relative '../lib/hexlet_code/tag'
 
 User = Struct.new(:name, :job, :gender, keyword_init: true)
 
