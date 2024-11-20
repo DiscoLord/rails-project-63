@@ -5,6 +5,7 @@ require_relative 'hexlet_code/version'
 autoload :FormBuilder, 'hexlet_code/form_builder'
 autoload :FormRenderer, 'hexlet_code/form_renderer'
 autoload :Tag, 'hexlet_code/tag'
+autoload :Inputs, 'hexlet_code/inputs'
 
 # Main module
 module HexletCode

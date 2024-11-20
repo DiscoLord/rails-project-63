@@ -18,32 +18,26 @@ module HexletCode
     def input(name, **args)
       case args[:as]
       when :textarea, :text
-        textarea(name, args[:rows] || 20, args[:cols] || 40, args[:value], args.except(:as, :rows, :cols, :value))
+        textarea(name, args[:value], args.except(:as, :value))
       when :submit
         submit(args[:value] || 'Save')
       else
-        input_tag(args[:as] || :text, name, args[:value], **args.except(:as, :value))
+        input_tag(name, args[:as], args[:value], **args.except(:as, :value))
       end
     end
 
-    def input_tag(type, name, value = nil, **params)
+    def input_tag(name, type, value, **params)
       value = @field_object.public_send(name) if value.nil?
-      label(name, name.capitalize)
-      @form_body[:inputs] << [:input, { type: type, name: name, value: value, **params }]
+      @form_body[:inputs] << Inputs::StringInput.new(name, type: type, value: value, **params)
     end
 
-    def textarea(name, rows, cols, value = nil, params = {})
+    def textarea(name, value, params = {})
       value = @field_object.public_send(name) if value.nil?
-      label(name, name.capitalize)
-      @form_body[:inputs] << [:textarea, { name: name, rows: rows, cols: cols, content: value, **params }]
+      @form_body[:inputs] << Inputs::TextInput.new(name, value: value, **params)
     end
 
     def submit(text = 'Save')
       @form_body[:submit] = { type: 'submit', value: text }
-    end
-
-    def label(for_id, text)
-      @form_body[:inputs] << [:label, { for: for_id, content: text }]
     end
   end
 end
